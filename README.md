@@ -9,8 +9,10 @@ Install with Homebrew:
 brew install andrewhannigan/tap/ctxgen
 ```
 
-See [latest release](https://github.com/AndrewHannigan/ctxgen/releases) for additional installation methods.
-
+Install via shell script:
+```
+curl -LsSf https://github.com/AndrewHannigan/ctxgen/releases/latest/download/ctxgen-installer.sh | sh
+```
 
 ## Overview
 
