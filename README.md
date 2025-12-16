@@ -12,6 +12,8 @@ A Rust CLI tool that generates `AGENTS.md` and `CLAUDE.md` files from a `.contex
 
 ## Installation
 
+Build from crates.io
+
 ```bash
 cargo install ctxgen
 ```
@@ -70,7 +72,7 @@ Content of nested file...
 
 ## Fold Tags
 
-Use `<ctxgen:fold>` tags to hide content in the generated markdown. This is useful for detailed content that agents should read from the source file when needed:
+Use `<ctxgen:fold>` tags to hide content in the generated markdown. This is useful for controlling context bloat. Agent can read the folded content using filesystem tools:
 
 ```xml
 This content is always visible.
