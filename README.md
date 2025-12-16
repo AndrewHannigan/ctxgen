@@ -103,7 +103,7 @@ Foreign Keys:
 </ctxgen:fold>
 ```
 
-When compiled, the fold is replaced with a placeholder:
+When compiled, the content enclosed in the `<ctxgen:fold>` tags is replaced with a placeholder:
 
 ```xml
 <file path="tables/orders.txt" has_folds="true">
