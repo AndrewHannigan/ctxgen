@@ -1,10 +1,11 @@
 [package]
 name = "ctxgen"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 description = "Generate AGENTS.md and CLAUDE.md from .context folder"
 license = "MIT"
 repository = "https://github.com/andrewhannigan/ctxgen"
+homepage = "https://github.com/andrewhannigan/ctxgen"
 keywords = ["cli", "context", "ai-agents", "markdown"]
 categories = ["command-line-utilities"]
 authors = ["Andrew Hannigan"]
