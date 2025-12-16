@@ -12,7 +12,7 @@ A Rust CLI tool that generates `AGENTS.md` and `CLAUDE.md` files from a `.contex
 
 ## Installation
 
-See (latest release)[https://github.com/AndrewHannigan/ctxgen/releases] for installation steps.
+See [latest release](https://github.com/AndrewHannigan/ctxgen/releases) for installation steps.
 
 ## Usage
 
