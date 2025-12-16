@@ -12,19 +12,7 @@ A Rust CLI tool that generates `AGENTS.md` and `CLAUDE.md` files from a `.contex
 
 ## Installation
 
-Build from crates.io
-
-```bash
-cargo install ctxgen
-```
-
-Or build from source:
-
-```bash
-git clone https://github.com/andrewhannigan/ctxgen
-cd ctxgen
-cargo install --path .
-```
+See (latest release)[https://github.com/AndrewHannigan/ctxgen/releases] for installation steps.
 
 ## Usage
 
@@ -44,7 +32,7 @@ ctxgen -c .context -o .
 
 ## Context Folder Structure
 
-The `.context` folder can contain text files organized in any folder structure:
+The `.context` folder can contain text files organized in any folder structure. Here's an example:
 
 ```
 .context/

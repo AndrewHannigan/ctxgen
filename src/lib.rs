@@ -9,8 +9,10 @@ use walkdir::WalkDir;
 struct ContextFile {
     /// Relative path from the .context folder
     path: String,
+
     /// Processed content with folds replaced
     content: String,
+    
     /// Whether this file contains fold tags
     has_folds: bool,
 }
@@ -35,9 +37,13 @@ fn process_folds(content: &str, file_path: &str) -> (String, bool) {
         let line_count = fold_content.lines().count();
         let line_text = if line_count == 1 { "line" } else { "lines" };
         
-        // Calculate start line number
-        let start_line = content[..full_match.start()].lines().count() + 1;
-        let end_line = start_line + line_count.saturating_sub(1);
+        // Calculate start and end line numbers (counting only content, not the fold tags)
+        // Find where the actual fold content starts (after the opening tag)
+        let fold_content_start = cap.get(1).unwrap().start();
+        let fold_content_end = cap.get(1).unwrap().end();
+        
+        let start_line = content[..fold_content_start].lines().count() + 1;
+        let end_line = content[..fold_content_end].lines().count();
         
         // Add placeholder
         let placeholder = format!(
