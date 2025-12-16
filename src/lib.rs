@@ -81,6 +81,10 @@ fn format_file_entry(file: &ContextFile) -> String {
 pub fn generate_context_markdown(context_dir: &Path) -> Result<String> {
     let mut context_files: Vec<ContextFile> = Vec::new();
     
+    // Get current working directory to compute relative paths from where ctxgen was called
+    let current_dir = std::env::current_dir()
+        .context("Failed to get current working directory")?;
+    
     // Walk the directory tree
     for entry in WalkDir::new(context_dir)
         .follow_links(true)
@@ -98,9 +102,9 @@ pub fn generate_context_markdown(context_dir: &Path) -> Result<String> {
         let content = fs::read_to_string(path)
             .with_context(|| format!("Failed to read file: {}", path.display()))?;
         
-        // Get relative path from context directory
+        // Get relative path from current working directory (where ctxgen was called)
         let relative_path = path
-            .strip_prefix(context_dir)
+            .strip_prefix(&current_dir)
             .unwrap_or(path)
             .to_string_lossy()
             .to_string();
@@ -153,7 +157,7 @@ mod tests {
     #[test]
     fn test_process_folds_no_folds() {
         let content = "This is regular content\nwith no folds.";
-        let (result, has_folds) = process_folds(content, "test.txt");
+        let (result, has_folds) = process_folds(content);
         assert_eq!(result, content);
         assert!(!has_folds);
     }
@@ -161,17 +165,17 @@ mod tests {
     #[test]
     fn test_process_folds_single_fold() {
         let content = "Before\n<ctxgen:fold>Hidden content</ctxgen:fold>\nAfter";
-        let (result, has_folds) = process_folds(content, "test.txt");
+        let (result, has_folds) = process_folds(content);
         assert!(has_folds);
         assert!(result.contains("[Folded content:"));
-        assert!(result.contains("Read 'test.txt'"));
+        assert!(result.contains("Read file for full content"));
         assert!(!result.contains("Hidden content"));
     }
     
     #[test]
     fn test_process_folds_multiple_folds() {
         let content = "Start\n<ctxgen:fold>First</ctxgen:fold>\nMiddle\n<ctxgen:fold>Second</ctxgen:fold>\nEnd";
-        let (result, has_folds) = process_folds(content, "test.txt");
+        let (result, has_folds) = process_folds(content);
         assert!(has_folds);
         assert!(result.contains("Start"));
         assert!(result.contains("Middle"));

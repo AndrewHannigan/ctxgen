@@ -9,7 +9,7 @@ Install with Homebrew:
 brew install andrewhannigan/tap/ctxgen
 ```
 
-Install via shell script:
+Install with shell script:
 ```
 curl -LsSf https://github.com/AndrewHannigan/ctxgen/releases/latest/download/ctxgen-installer.sh | sh
 ```
@@ -53,11 +53,11 @@ The `.context` folder can contain text files organized in any folder structure. 
 When compiled to the AGENTS.md and CLAUDE.md, each file is wrapped in a `<file>` tag:
 
 ```xml
-<file path="guidelines.txt">
+<file path=".context/guidelines.txt">
 Content of the file...
 </file>
 
-<file path="architecture/overview.txt">
+<file path=".context/architecture/overview.txt">
 Content of the file...
 </file>
 ```
@@ -99,7 +99,7 @@ Schema:
 When compiled, the content enclosed in the `<ctxgen:fold>` tags is replaced with a placeholder:
 
 ```xml
-<file path="tables/orders.txt" has_folds="true">
+<file path=".context/tables/orders.txt" has_folds="true">
 The `public.orders` table contains a row for each order placed at the company.
 
 Schema:
