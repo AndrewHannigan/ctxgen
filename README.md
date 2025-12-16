@@ -62,9 +62,10 @@ Content of the file...
 
 ## Fold Tags
 
-`ctxgen` supports progressive disclosure of context via the `<ctxgen:fold>` tag. Content inside of `<ctxgen:fold>` tags are automatically replaced by a placeholder in the compiled instructions files. This placeholder describes the location of the folded content. The Agent can directly read the folded content using standard filesystem tools. This allows users to control bloat
+`ctxgen` supports progressive disclosure of context via the `<ctxgen:fold>` tag. Content inside of `<ctxgen:fold>` tags are automatically replaced by a placeholder in the compiled instructions files. This placeholder describes the location of the folded content. The Agent can directly read the folded content using standard filesystem tools.
 
-One example might be a table schema file. Suppose we have a file `.context/tables/orders.txt`.
+One example where the fold tag could be useful is a table schema file. Suppose we have a file `.context/tables/orders.txt` with the following contents:
+
 ```xml
 The `public.orders` table contains a row for each order placed at the company.
 
