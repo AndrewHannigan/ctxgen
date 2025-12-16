@@ -14,11 +14,7 @@ See [latest release](https://github.com/AndrewHannigan/ctxgen/releases) for addi
 
 ## Overview
 
-`ctxgen` reads text files from a `.context` directory (typically at the root of a code repository) and compiles them into markdown files suitable for AI agents. The tool:
-
-- Flattens nested folder structures into a single instructions file for agents
-- Supports progressive disclosure of context via the `<ctxgen:fold>` tag 
-
+`ctxgen` reads text files from a `.context` directory (typically at the root of a code repository) and compiles them into a flat markdown files suitable for AI agents. The tool also supports progressive disclosure of context via the `<ctxgen:fold>` tag.
 
 ## Usage
 
@@ -38,7 +34,7 @@ ctxgen -c .context -o .
 
 ## Context Folder Structure
 
-The `.context` folder can contain text files organized in any folder structure. Here's an example:
+The `.context` folder can contain text files organized in any folder structure. File format, file naming, and directory structure do not matter. Organize the `.context` folder however you see fit for your project. Here's an example:
 
 ```
 .context/
@@ -52,7 +48,7 @@ The `.context` folder can contain text files organized in any folder structure. 
 
 ## Output Format
 
-Each file is wrapped in a `<file>` tag:
+When compiled to the AGENTS.md and CLAUDE.md, each file is wrapped in a `<file>` tag:
 
 ```xml
 <file path="guidelines.txt">
@@ -96,13 +92,6 @@ Files containing folds will have `has_folds="true"` added to their `<file>` tag:
 ...
 </file>
 ```
-
-## Options
-
-| Option | Short | Default | Description |
-|--------|-------|---------|-------------|
-| `--context-dir` | `-c` | `.context` | Path to the context folder |
-| `--output-dir` | `-o` | `.` | Output directory for generated files |
 
 ## License
 
