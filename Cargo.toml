@@ -1,6 +1,6 @@
 [package]
 name = "ctxgen"
-version = "0.2.5"
+version = "0.2.6"
 edition = "2021"
 description = "Generate AGENTS.md and CLAUDE.md from .context folder"
 license = "MIT"
