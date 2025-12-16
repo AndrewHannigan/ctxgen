@@ -1,18 +1,24 @@
 # ctxgen
 
-A Rust CLI tool that generates `AGENTS.md` and `CLAUDE.md` files from a `.context` folder.
+A CLI tool that generates `AGENTS.md` and `CLAUDE.md` files from a `.context` folder.
+
+## Installation
+
+Install with Homebrew:
+```
+brew install andrewhannigan/tap/ctxgen
+```
+
+See [latest release](https://github.com/AndrewHannigan/ctxgen/releases) for additional installation methods.
+
 
 ## Overview
 
 `ctxgen` reads text files from a `.context` directory (typically at the root of a code repository) and compiles them into markdown files suitable for AI agents. The tool:
 
-- Flattens nested folder structures into a single output file
-- Wraps each file's contents in `<file>` tags with path information
-- Supports fold tags to hide content that agents should read from the source
+- Flattens nested folder structures into a single instructions file for agents
+- Supports progressive disclosure of context via the `<ctxgen:fold>` tag 
 
-## Installation
-
-See [latest release](https://github.com/AndrewHannigan/ctxgen/releases) for installation steps.
 
 ## Usage
 
