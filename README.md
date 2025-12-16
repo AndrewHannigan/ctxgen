@@ -16,7 +16,7 @@ curl -LsSf https://github.com/AndrewHannigan/ctxgen/releases/latest/download/ctx
 
 ## Overview
 
-`ctxgen` reads text files from a `.context` directory (typically at the root of a code repository) and compiles them into a flat markdown files suitable for AI agents. The tool also supports progressive disclosure of context via the `<ctxgen:fold>` tag.
+`ctxgen` reads text files from a `.context` directory (typically at the root of a code repository) and compiles them into flat instruction files for AI agents. The tool also supports progressive disclosure of context via the `<ctxgen:fold>` tag.
 
 ## Usage
 
@@ -36,7 +36,7 @@ ctxgen -c .context -o .
 
 ## Context Folder Structure
 
-The `.context` folder can contain text files organized in any folder structure. File format, file naming, and directory structure do not matter. Organize the `.context` folder however you see fit for your project. Here's an example:
+The `.context` folder can contain text files organized in any folder structure. There is no required file format, file naming, or directory structure inside of the `.context` folder. Organize the `.context` folder however you see fit for your project. Here's an example:
 
 ```
 .context/
@@ -93,15 +93,6 @@ Schema:
 | updated_at       | TIMESTAMP WITH TIME ZONE    | NOT NULL, DEFAULT NOW()| Last update timestamp                          |
 | shipped_at       | TIMESTAMP WITH TIME ZONE    | NULL                   | Timestamp when order was shipped               |
 | delivered_at     | TIMESTAMP WITH TIME ZONE    | NULL                   | Timestamp when order was delivered             |
-
-Indexes:
-- idx_orders_customer_id ON customer_id
-- idx_orders_status ON status
-- idx_orders_created_at ON created_at DESC
-- idx_orders_order_number ON order_number (unique)
-
-Foreign Keys:
-- customer_id REFERENCES customers(id) ON DELETE RESTRICT
 </ctxgen:fold>
 ```
 
@@ -112,7 +103,7 @@ When compiled, the content enclosed in the `<ctxgen:fold>` tags is replaced with
 The `public.orders` table contains a row for each order placed at the company.
 
 Schema:
-[Folded content: 30 lines (lines 5-34). Read file for full content.]
+[Folded content: 20 lines (lines 5-24). Read file for full content.]
 </file>
 ```
 
