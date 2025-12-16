@@ -56,40 +56,60 @@ Content of the file...
 </file>
 
 <file path="architecture/overview.txt">
-Content of nested file...
+Content of the file...
 </file>
 ```
 
 ## Fold Tags
 
-Use `<ctxgen:fold>` tags to hide content in the generated markdown. This is useful for controlling context bloat. Agent can read the folded content using filesystem tools:
+`ctxgen` supports progressive disclosure of context via the `<ctxgen:fold>` tag. Content inside of `<ctxgen:fold>` tags are automatically replaced by a placeholder in the compiled instructions files. This placeholder describes the location of the folded content. The Agent can directly read the folded content using standard filesystem tools. This allows users to control bloat
 
+One example might be a table schema file. Suppose we have a file `.context/tables/orders.txt`.
 ```xml
-This content is always visible.
+The `public.orders` table contains a row for each order placed at the company.
 
+Schema:
 <ctxgen:fold>
-This detailed content will be replaced with a placeholder.
-The agent will be instructed to read the original file to see it.
-</ctxgen:fold>
+| Column           | Type                        | Constraints            | Description                                    |
+|------------------|-----------------------------|------------------------|------------------------------------------------|
+| id               | BIGINT                      | PRIMARY KEY            | Unique identifier for the order                |
+| customer_id      | BIGINT                      | NOT NULL, FK           | Reference to customers.id                      |
+| order_number     | VARCHAR(50)                 | UNIQUE, NOT NULL       | Human-readable order number (e.g., "ORD-1234") |
+| status           | VARCHAR(20)                 | NOT NULL               | Order status: confirmed, shipped, delivered    |
+| total_amount     | DECIMAL(10,2)               | NOT NULL               | Total order amount in USD                      |
+| subtotal         | DECIMAL(10,2)               | NOT NULL               | Subtotal before tax and shipping               |
+| tax_amount       | DECIMAL(10,2)               | NOT NULL               | Total tax amount                               |
+| shipping_amount  | DECIMAL(10,2)               | NOT NULL               | Shipping cost                                  |
+| discount_amount  | DECIMAL(10,2)               | DEFAULT 0.00           | Total discount applied                         |
+| currency         | CHAR(3)                     | DEFAULT 'USD'          | ISO 4217 currency code                         |
+| payment_method   | VARCHAR(50)                 | NULL                   | Payment method used (credit_card, paypal, etc.)|
+| shipping_address | JSONB                       | NOT NULL               | Shipping address details                       |
+| billing_address  | JSONB                       | NOT NULL               | Billing address details                        |
+| notes            | TEXT                        | NULL                   | Additional order notes                         |
+| created_at       | TIMESTAMP WITH TIME ZONE    | NOT NULL, DEFAULT NOW()| Order creation timestamp                       |
+| updated_at       | TIMESTAMP WITH TIME ZONE    | NOT NULL, DEFAULT NOW()| Last update timestamp                          |
+| shipped_at       | TIMESTAMP WITH TIME ZONE    | NULL                   | Timestamp when order was shipped               |
+| delivered_at     | TIMESTAMP WITH TIME ZONE    | NULL                   | Timestamp when order was delivered             |
 
-More visible content here.
+Indexes:
+- idx_orders_customer_id ON customer_id
+- idx_orders_status ON status
+- idx_orders_created_at ON created_at DESC
+- idx_orders_order_number ON order_number (unique)
+
+Foreign Keys:
+- customer_id REFERENCES customers(id) ON DELETE RESTRICT
+</ctxgen:fold>
 ```
 
 When compiled, the fold is replaced with a placeholder:
 
-```
-This content is always visible.
-
-[Folded content: 2 lines (lines 3-4). Read 'filename.txt' for full content.]
-
-More visible content here.
-```
-
-Files containing folds will have `has_folds="true"` added to their `<file>` tag:
-
 ```xml
-<file path="detailed-guide.txt" has_folds="true">
-...
+<file path="tables/orders.txt" has_folds="true">
+The `public.orders` table contains a row for each order placed at the company.
+
+Schema:
+[Folded content: 30 lines (lines 5-34). Read file for full content.]
 </file>
 ```
 

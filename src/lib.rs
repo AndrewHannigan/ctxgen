@@ -18,7 +18,7 @@ struct ContextFile {
 }
 
 /// Process fold tags in content, replacing them with placeholders
-fn process_folds(content: &str, file_path: &str) -> (String, bool) {
+fn process_folds(content: &str) -> (String, bool) {
     let fold_regex = Regex::new(r"(?s)<ctxgen:fold>(.*?)</ctxgen:fold>").unwrap();
     
     let mut has_folds = false;
@@ -47,8 +47,8 @@ fn process_folds(content: &str, file_path: &str) -> (String, bool) {
         
         // Add placeholder
         let placeholder = format!(
-            "[Folded content: {} {} (lines {}-{}). Read '{}' for full content.]",
-            line_count, line_text, start_line, end_line, file_path
+            "[Folded content: {} {} (lines {}-{}). Read file for full content.]",
+            line_count, line_text, start_line, end_line
         );
         result.push_str(&placeholder);
         
@@ -106,7 +106,7 @@ pub fn generate_context_markdown(context_dir: &Path) -> Result<String> {
             .to_string();
         
         // Process folds
-        let (processed_content, has_folds) = process_folds(&content, &relative_path);
+        let (processed_content, has_folds) = process_folds(&content);
         
         context_files.push(ContextFile {
             path: relative_path,
